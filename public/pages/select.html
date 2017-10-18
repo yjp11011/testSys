@@ -1,0 +1,157 @@
+<div class="addAcenter">
+<h3>查看题目</h3>
+<hr>
+<div class="addAtop">
+<select name="type" id="type" disabled>
+    <option value="单选题">单选题</option>
+    <option value="多选题">多选题</option>
+    <option value="简答题">简答题</option>
+</select>
+<select name="direction" id="direction" disabled>
+    <option value="方向">方向</option>
+    <option value="WebUI">WebUI</option>
+    <option value="JavaEE">JavaEE</option>
+    <option value="IOS">IOS</option>
+    <option value="Android">Android</option>
+</select>
+<select name="knowledge" id="knowledge" disabled>
+    <option value="知识点">知识点</option>
+    <option value=""></option>
+    <option value=""></option>
+    <option value=""></option>
+    <option value=""></option> 
+</select>
+<select name="difficulty" id="difficulty" disabled>
+    <option value="难度">难度</option>
+    <option value="容易">容易</option>
+    <option value="中等">中等</option>
+    <option value="难">难</option>
+    <option value="极难">极难</option>
+</select>
+分值: <input type="text" name="grade" disabled>
+</div>
+<hr>
+<div class="addAContent">
+<div class="scroll">
+ 
+</div>
+<div class="footer">
+ <button class="btn btn-primary btn-sm return1">返回</button> 
+</div>
+</div>
+</div>
+<script>
+    $(function(){
+        //获取高度
+        var height=$('div.addAContent').height();
+    
+        $('div.addAContent div.scroll').css('height',height-300+'px');
+       
+        //返回按钮
+        $('button.return1').on("click",function(){
+            $(".navLeft dd:eq(1)").trigger('click');
+        })
+        
+        //根据id获取数据到页面
+            var id=$('div.button button.select').attr('num')
+            $.getJSON('/questionBank/findById?id='+id,function(data){
+                console.log(data);    
+            
+            var type=data[0].type;
+            switch(type){
+                case '单选题':$('div.scroll').load('pages/sgquestion.html');
+               
+                            break;
+                case '多选题':$('div.scroll').load('pages/morequestion.html');
+               
+                            break;
+                case '简答题':$('div.scroll').load('pages/shortquestion.html');
+               
+                            break;
+            }
+            $('#type').find('option[value="'+data[0].type+'"]').attr('selected',true);
+            $('#direction').find('option[value="'+data[0].direction+'"]').attr('selected',true);
+            $('#difficulty').find('option[value="'+data[0].difficulty+'"]').attr('selected',true);
+            mkKnowledge();
+              //显示不出知识点
+              //alert('要查看的题即将打印');
+              setTimeout(function(){
+            $('input[name=grade]').val(data[0].grade);
+            $('#knowledge').find('option[value="'+data[0].knowledge+'"]').attr('selected',true);
+            $('#question').val(data[0].question);
+            $('input[name=A]').val(isNull(data[0].A));
+            $('input[name=B]').val(isNull(data[0].B));
+            $('input[name=C]').val(isNull(data[0].C));
+            $('input[name=D]').val(isNull(data[0].D));
+            $('input[name=E]').val(isNull(data[0].E));
+            $('input[name=F]').val(isNull(data[0].F));
+            $('#answer').val(data[0].answer);
+            },20);
+            })
+        
+        //获取结束
+    });//
+    //封装获取添加页面数据函数
+    function getData(){
+            var id=$('div.button button.update').attr('num');
+            var type=$('#type option:selected').text();
+            var direction=$('#direction option:selected').text();
+            var knowledge=$('#knowledge option:selected').text();
+            var difficulty=$('#difficulty option:selected').text();
+            var grade=$('input[name=grade]').val();
+            var question=$('#question').val();
+            var A=$('input[name=A]').val();
+            var B=$('input[name=B]').val();
+            var C=$('input[name=C]').val();
+            var D=$('input[name=D]').val();
+            var E=$('input[name=E]').val();
+            var F=$('input[name=F]').val();
+            var answer=$('#answer').val();
+            var obj={
+                id:id,
+                type:type,
+                direction:direction,
+                knowledge:knowledge,
+                difficulty:difficulty,
+                question:question,
+                answer:answer,
+                grade:grade,
+                A:A,
+                B:B,
+                C:C,
+                D:D,
+                E:E,
+                F:F
+            }
+            return obj;
+          
+        }
+    //封装知识点下拉框
+    function mkKnowledge(direction){
+            var direction=$('#direction option:selected').val(); 
+            if(direction!='方向'){
+            $.getJSON('knowledge/findByDrct',function(data){
+            $('#knowledge option:eq(1)').text(data[0][direction]);
+            $('#knowledge option:eq(1)').val(data[0][direction]);
+            $('#knowledge option:eq(2)').text(data[1][direction]);
+            $('#knowledge option:eq(2)').val(data[1][direction]);
+            $('#knowledge option:eq(3)').text(data[2][direction]);
+            $('#knowledge option:eq(3)').val(data[2][direction]);
+            $('#knowledge option:eq(4)').text(data[3][direction]);
+            $('#knowledge option:eq(4)').val(data[3][direction]);
+            });
+            }
+        else{ 
+            $('#knowledge option').text(null);
+            $('#knowledge option').val(null);
+            $('#knowledge option:eq(0)').text('知识点');
+        } 
+    }
+    //封装null
+    function isNull(str){
+        if (str=='null')
+        {
+            str='';
+        }
+        return str;
+    }

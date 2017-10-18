@@ -1,0 +1,21 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+   background: url("../images/theme/bg.png");
+}
+a{
+    color: yellow;
+    text-decoration: none;
+    display: inline-block;
+    
+}
+a:hover{
+    color:orange;
+}
+h1{
+    margin:50px auto;
+    width:450px;
+    color: orange;
+}

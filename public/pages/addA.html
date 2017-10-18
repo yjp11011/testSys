@@ -1,0 +1,154 @@
+<div class="addAcenter">
+<h3>题目添加</h3>
+<hr>
+<div class="addAtop">
+<select name="type" id="type">
+    <option value="题型">题型</option>
+    <option value="单选题">单选题</option>
+    <option value="多选题">多选题</option>
+    <option value="简答题">简答题</option>
+</select>
+<select name="direction" id="direction">
+    <option value="方向">方向</option>
+    <option value="WebUI">WebUI</option>
+    <option value="JavaEE">JavaEE</option>
+    <option value="IOS">IOS</option>
+    <option value="Android">Android</option>
+</select>
+<select name="knowledge" id="knowledge">
+    <option value="知识点">知识点</option>
+    <option value=""></option>
+    <option value=""></option>
+    <option value=""></option>
+    <option value=""></option> 
+</select>
+<select name="difficulty" id="difficulty">
+    <option value="难度">难度</option>
+    <option value="简易">容易</option>
+    <option value="适中">中等</option>
+    <option value="难">难</option>
+    <option value="极难">极难</option>
+</select>
+分值: <input type="number" name="grade" required>
+</div>
+<hr>
+<div class="addAContent">
+<div class="scroll">
+
+</div>
+<div class="footer">
+<button class="btn btn-primary btn-sm btn1">提交</button><button class="btn btn-primary btn-sm return1">返回</button>
+</div>
+</div>
+</div>
+<script>
+    $(function(){
+         //获取高度
+        var height=$('div.addAContent').height();
+    
+        $('div.addAContent div.scroll').css('height',height-300+'px');
+        //返回按钮
+        $('button.return1').on("click",function(){
+            $(".navLeft dd:eq(1)").trigger('click');
+        })
+        //知识点下拉框
+        $('#direction').change(function(){
+            var direction=$(this).val();
+            if(direction!='方向'){
+            $.getJSON('knowledge/findByDrct',function(data){
+            $('#knowledge option:eq(1)').text(data[0][direction]);
+            $('#knowledge option:eq(1)').val(data[0][direction]);
+            $('#knowledge option:eq(2)').text(data[1][direction]);
+            $('#knowledge option:eq(2)').val(data[1][direction]);
+            $('#knowledge option:eq(3)').text(data[2][direction]);
+            $('#knowledge option:eq(3)').val(data[2][direction]);
+            $('#knowledge option:eq(4)').text(data[3][direction]);
+            $('#knowledge option:eq(4)').val(data[3][direction]);
+            });
+            
+            }
+        else{
+            
+            $('#knowledge option').text(null);
+            $('#knowledge option').val(null);
+            $('#knowledge option:eq(0)').text('知识点');
+            $('#knowledge').find('option[value="知识点"]').attr('selected',true);
+        }
+        })
+        //题型设置
+        $('#type').change(function(){
+            var type=$(this).val();
+                switch(type){
+                case '单选题':$('div.scroll').load('pages/sgquestion.html');
+               
+                            break;
+                case '多选题':$('div.scroll').load('pages/morequestion.html');
+               
+                            break;
+                case '简答题':$('div.scroll').load('pages/shortquestion.html');
+               
+                            break;
+            }
+        });
+
+        //提交按钮
+        $('button.btn1').on("click",function(){
+           
+           var obj=getData();
+           if(obj.type!='题型'&&obj.direction!='方向'&&obj.knowledge!='知识点'&&obj.difficulty!='难度')
+           {
+           $.ajax('/questionBank/save',{
+                'data':obj,
+                'method':'POST',
+                'content-Type':'application/json',
+                success:function(data){
+                    console.log(data);
+                    alert('题目添加成功了！');
+                }
+           });
+           }
+        else{
+            alert('题目类型有误');
+                }
+
+            
+        });//提交按钮结束
+        
+        
+    })//页面加载完加载
+    //封装获取添加页面数据函数
+    function getData(){
+            var type=$('#type option:selected').text();
+            var direction=$('#direction option:selected').text();
+            var knowledge=$('#knowledge option:selected').text();
+            var difficulty=$('#difficulty option:selected').text();
+            var grade=$('input[name=grade]').val();
+            var question=$('#question').val();
+            var A=$('input[name=A]').val();
+            var B=$('input[name=B]').val();
+            var C=$('input[name=C]').val();
+            var D=$('input[name=D]').val();
+            var E=$('input[name=E]').val();
+            var F=$('input[name=F]').val();
+            var answer=$('#answer').val();
+            var obj={
+                type:type,
+                direction:direction,
+                knowledge:knowledge,
+                difficulty:difficulty,
+                question:question,
+                answer:answer,
+                grade:grade,
+                A:A,
+                B:B,
+                C:C,
+                D:D,
+                E:E,
+                F:F
+            }
+            return obj;
+          
+        }
+        //封装不能为空函数
+</script>
+

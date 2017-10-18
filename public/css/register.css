@@ -1,0 +1,32 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+   background: url("../images/theme/bg.png");
+   color: black;
+   font-size: 20px;
+}
+a{
+    text-decoration-line: none;
+    color:black;
+}
+a:hover{
+    color: red;
+}
+form{
+    width:400px;
+    margin:150px auto;
+}
+input{
+    height:30px;
+    width:100px;
+    margin:20px auto;
+    border:none;
+    background: skyblue;
+    color:blue;
+}
+h1.h1{
+    width:200px;
+    margin:50px auto;
+}

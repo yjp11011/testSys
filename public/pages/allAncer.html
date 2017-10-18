@@ -1,0 +1,78 @@
+<h1>全部题目</h1>
+
+<hr>
+<div class="show2">
+<table>
+    <thead class="tab2">
+        <tr>
+            <td>题型</td>
+            <td>方向</td>
+            <td>知识点</td>
+            <td>难度</td>
+            <td>分值</td>
+            <td>问题</td>
+            <td>答案</td>
+            <td>A</td>
+            <td>B</td>
+            <td>C</td>
+            <td>D</td>
+            <td>E</td>
+            <td>F</td>
+        </tr>
+    </thead>
+</table>
+<div class="scroll3">
+<table>
+    <tbody class="tab2">
+
+    </tbody>
+</table>
+</div>
+</div>
+<script>
+    
+    
+    $(function(){
+getQues();
+
+
+// $('tbody.tab2 tr').find().css('background','orange');
+    })//
+    function getQues(){
+    $('tbody.tab2').empty();
+           $.getJSON('/questionBank/findAll',function(data){
+            
+            data.forEach(function(item){
+                
+                var newTr="<tr>"
+                    +"<td class='td1'>"+item.type+"</td>"
+                    +"<td>"+item.direction+"</td>"
+                    +"<td class='td1'>"+item.knowledge+"</td>"
+                    +"<td >"+item.difficulty+"</td>"
+                    +"<td class='td1'>"+item.grade+"</td>"
+                    +"<td >"+item.question+"</td>"
+                    +"<td class='td1'>"+item.answer+"</td>"
+                    +"<td >"+isNull(item.A)+"</td>"
+                    +"<td class='td1'>"+isNull(item.B)+"</td>"
+                    +"<td >"+isNull(item.C)+"</td>"
+                    +"<td class='td1'>"+isNull(item.D)+"</td>"
+                    +"<td >"+isNull(item.E)+"</td>"
+                    +"<td class='td1'>"+isNull(item.F)+"</td>"
+                +"</tr>";
+                $('tbody.tab2').append(newTr);
+                
+            })
+            
+           });
+             
+}
+        //封装null
+    function isNull(str){
+        if (str=='null')
+        {
+            str='';
+        }
+        return str;
+    }
+</script>
+

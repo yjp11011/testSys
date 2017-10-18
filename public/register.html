@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="frameworks/jquery-3.0.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="frameworks/bootstrap-3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/register.css">
+    <script>
+        $(function(){
+        
+            $('form:eq(0)').on("submit",function(event){
+                var user=$('input[name=user]').val();
+                var password=$('input[name=password]').val();
+                var password2=$('input[name=password2]').val();
+                
+               if(password2==password){
+                var User={
+                    user:user,
+                    password:password
+                    }
+                console.log(User);
+                    $.ajax('/user/save',{
+                        "data":User,
+                        "method":"POST",
+                        "content-Type":"appliction/json",
+                        success:function(data){
+                            console.log(data);
+                            alert("注册成功了");
+                            $(window).attr('location','./show.html');
+                        }
+                    });
+                    event.preventDefault();
+                    
+               }
+                else{
+                    event.preventDefault();
+                    alert("两次密码不一致");
+                }
+                event.preventDefault();
+            })
+        });//
+    </script>
+</head>
+<body>
+    <h1 class="h1">注册</h1>
+    <form action="./show.html">
+        用户名： <input type="text" name="user" required><br>
+        设置密码：<input type="password" name="password" required><br>
+        确认密码：<input type="password" name="password2" required><br>
+        <input type="submit" value="注册" class="btn btn-primary btn-sm">
+    </form>
+</body>
+</html>

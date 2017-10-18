@@ -1,0 +1,19 @@
+class Obj{
+    constructor(id=null,type="单选题','多选题','简答题",direction="WebUI','Android','JavaEE','IOS",knowledge="WebUI','HTML','java4','java3','java2','java1','ios4','ios3','ios2','javaScript','ios1','android4','android2','android1','android3','css",difficulty="容易','中等','难','极难",question=null,answer=null,grade=null,A=null,B=null,C=null,D=null,E=null,F=null){
+        this.id=id;
+        this.type=type;
+        this.direction=direction;
+        this.knowledge=knowledge;
+        this.difficulty=difficulty;
+        this.question=question;
+        this.answer=answer;
+        this.grade=grade;
+        this.A=A;
+        this.B=B;
+        this.C=C;
+        this.D=D;
+        this.E=E;
+        this.F=F;
+    }
+}
+module.exports=Obj;

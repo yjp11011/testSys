@@ -1,0 +1,260 @@
+*,h1,h2,h3,h4{
+  padding: 0;
+  margin: 0;
+  list-style: none; 
+  box-sizing: border-box;
+  text-decoration: none;
+}
+a{
+  text-decoration: none;
+  color:black;
+}
+div.Allcenter{
+background: url("../images/theme/bg.png");
+background-repeat:round no-repeat;
+
+}
+header.header{
+  height:100px;
+  background: url("../images/theme/top.png");
+  background-repeat: round;
+  position: relative;
+}
+header.header div.tkLogo{
+  position: absolute;
+  left:20px;
+  top:20px;
+}
+header.header p.sign{
+  background: url("../images/theme/sign.png");
+  position: absolute;
+  left:0px;
+  right:0;
+  margin:0 auto;
+  width:250px;
+  height:40px;
+  background-repeat: round;
+  text-align: center;
+  line-height: 40px;
+}
+article.article{
+  overflow: hidden; 
+}
+/* footer.footer{
+  height:100px;
+} */
+
+section.navLeft dl dt{
+  background: url("../images/theme/list_btn_li.png");
+  background-repeat: round;
+  text-indent: 20px;
+  height:30px;
+  line-height: 30px;
+  color:white;
+
+}
+section.navLeft dl{
+  width:150px;
+  margin: 0 auto;
+  position: relative;
+
+}
+
+section.navLeft dl dd{
+  text-align: center;
+  background: url("../images/zy/hover.png");
+  background-repeat: round;
+  width:130px;
+  margin:0 auto;
+  /* display: none; */
+  height:25px;
+  color:black;
+}
+section.navLeft dl dt:hover{
+  cursor: pointer;
+}
+/* section.navLeft dl dd:hover{
+  background: url("../images/theme/list_ui_li_act.png");
+  cursor:pointer;
+  color: white;
+} */
+
+.hide{
+  display:none;
+}
+section.navLeft{
+  width:16%;
+  height:100%;
+  background: url("../images/theme/left.png");
+  background-repeat:round;
+  float:left;
+}
+section.Content{
+  width:84%;
+  margin-left:16%;
+  /* background: white; */
+  border-top-left-radius: 8px;
+}
+div.button button{
+  width:100px;
+  height: 30px;
+  border-radius: 5px;
+
+
+}
+div.button{
+  position: relative;
+  height:30px;
+}
+.button .delete{
+    background:url("../images/icon/icon_l_k.png");
+    background-repeat: round;
+    position: absolute;
+    right:110px;
+}
+
+.button .add{
+    background:url("../images/icon/icon_l_c.png");
+    background-repeat: round;
+    position: absolute;
+    right:0px;
+}
+.button .update{
+    background:url("../images/icon/icon_l_d.png");
+    background-repeat: round;
+    position: absolute;
+    right:220px;
+}
+  .button .select{
+    background:url("../images/icon/icon_l_zzz.jpg");
+    background-repeat: round;
+    position: absolute;
+    right:330px;
+    color:black;
+  }
+
+  div.addAtop{
+    /* height: 50px; */
+  }
+  div.addAtop select{
+    width:100px;
+    margin-left:10px;
+    margin-right:10px;
+    text-align: center;
+  }
+  div.addAContent p,span{
+    display: inline-block;
+  }
+  div.addAContent p{
+    width:40px;
+    height:40px;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 40px;
+    background: skyblue;
+    text-align: center;
+  }
+  div.addAContent textarea{
+    height:40px;
+    text-indent: 10px;      
+  }
+  div.addAContent input{
+    height:40px;
+    border:1px solid #ccc;
+    width:300px;
+    text-indent: 10px;
+  }
+  div.addAContent span{
+    font-size: 20px;
+  }
+  div.addAContent button{
+    margin-left:10%;
+  }
+  div.addAContent .scroll{
+    overflow-y: scroll;
+
+  }
+  div.addAContent{
+    height:500px; 
+  
+  }
+  div.addAContent .footer{
+    height:50px;
+    margin-top:0px;
+  }
+  div.Allnav{
+      height:30px;
+      position:relative;
+  }
+  div.Allnav .import{
+    position:absolute;
+    right:0px;
+    top:0px;
+  }
+  thead.tab1 tr td{
+    width:100px;
+    height:30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 18px;
+  }
+  
+  tbody.tab1 tr td{
+    width:100px;
+    height:30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 18px;
+    background: #ccc;
+   
+  }
+  thead.tab2 tr td{
+    width:100px;
+    height:30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 18px;
+     background:pink;
+  }
+  
+  tbody.tab2 tr td{
+    width:100px;
+    height:30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 18px;
+    background: #ccc;
+  }
+  div.show div.tab1{
+    height:250px;
+    overflow-y:auto;
+    border:none;
+  }
+  div.scroll3{
+    height:450px;
+    width:100%;
+    overflow:auto;
+    border:none;
+  }
+  
+  div.show table{
+    margin-top:0px;
+    margin-left:200px;
+    
+  }
+  div.show .nav{
+    width:850px;
+    height:40px;
+    margin:0 auto;
+  }
+  div.addAcenter{
+   overflow: hidden;
+    margin:0 auto;
+  }
+  tbody.tab2 td.td1{
+    background: orange;
+  }
+  
+ 
+
+

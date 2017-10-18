@@ -1,0 +1,263 @@
+
+
+<h1>题目管理</h1>
+<hr>
+<div class="button">
+    <input type="text" name="query" placeholder="关键字查找"><button class="btn btn-primary btn-sm btn3">查询</button>
+    <button class="add" page="pages/addA.html">添加题目</button>
+    <button class="delete" page="pages/deleteA.html">删除题目</button>
+    <button class="update" page="pages/updateA.html">修改题目</button>
+    <button class="btn btn-primary btn-sm select" page="pages/select.html">查看</button>
+</div>
+<div class="Content2">
+    
+    <div class="show">
+        <br><br>
+        <table>
+            <thead class="tab1">
+                <tr a="1">
+                    <td>题型</td>
+                    <td>全部</td>
+                    <td>单选题</td>
+                    <td>多选题</td>
+                    <td>简答题</td>
+                    <td></td>
+                </tr>
+                <tr a="1">
+                    <td>方向</td>
+                    <td>全部</td>
+                    <td>WebUI</td>
+                    <td>JavaEE</td>
+                    <td>Android</td>
+                    <td>IOS</td>
+                </tr>
+                <tr a="1">
+                    <td>知识点</td>
+                    <td>全部</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr a="1">
+                    <td>难度</td>
+                    <td>全部</td>
+                    <td>容易</td>
+                    <td>中等</td>
+                    <td>难</td>
+                    <td>极难</td>
+                </tr>
+                <tr>
+                    <td>编号</td>
+                    <td>题目编号</td>
+                    <td>题型</td>
+                    <td>方向</td>
+                    <td>知识点</td>
+                    <td>难度</td>
+                </tr>
+            
+            </thead>
+        </table>
+    <div class="tab1">
+    <table>
+            <tbody class="tab1">
+                
+            </tbody>
+    </table>
+    </div> 
+    </div>
+</div>
+<script>
+    $(function(){
+        //关键字功能
+        $('button.btn3').on('click',function(){
+           var keys=$('input[name=query]').val();
+           $('tbody.tab1').empty();
+            $.getJSON('/questionBank/query?keys='+keys,function(data){
+                console.log(data);
+                var num=1;
+                data.forEach(function(item){
+                  var newTr="<tr data-toggle='popover' data-trigger='hover' title='题干' data-content='"+item.question+"'>"
+                    +"<td> <input type='checkbox' value="+item.id+"> </td>"
+                    +"<td>"+num+++"</td>"
+                    +"<td>"+item.type+"</td>"
+                    +"<td>"+item.direction+"</td>"
+                    +"<td>"+item.knowledge+"</td>"
+                    +"<td>"+item.difficulty+"</td>"
+                +"</tr>";
+                $('tbody.tab1').append(newTr);  
+                });
+            });
+        });
+        //获取视口高度
+        var height = $(document).height();
+        var ch = height-200;
+        $('.Content2').css('height',ch+'px');
+        //点击按钮添加页面
+        
+        $('div.button button.add').on('click',function(){
+             
+            var page=$(this).attr("page");
+            $('div.Content2').load(page);
+        })
+        //表格各行变色
+        $('thead.tab1 tr:even').css("background","pink");
+        $('thead.tab1 tr:odd').css("background","skyblue")
+        //点击表格功能
+        var obj={};
+        $('thead.tab1 tr').find('td').on("click",function(){
+            var num1 =$(this).parent().index();
+           switch(num1){
+                case 0: $(this).parent().children().css("background","pink");
+                        $(this).css("background","green");
+                        $(this).css("cursor","pointer");
+                        if($(this).text()!='全部'&&$(this).text()!='题型'){
+                            obj.type=$(this).text();
+                        }  
+                        else{
+                            delete obj.type;
+                            
+                        }
+                        break;
+                case 1: $(this).parent().children().css("background","skyblue");
+                        $(this).css("background","green");
+                        $(this).css("cursor","pointer");
+                        if($(this).text()!='全部'&&$(this).text()!='方向'){
+                            obj.direction=$(this).text();
+                            var direction=$(this).text();
+                            $('thead.tab1 tr:eq(2) td').empty();
+                            $.getJSON('knowledge/findByDrct',function(data){
+                               $('thead.tab1 tr:eq(2) td:eq(0)').text('知识点');
+                               $('thead.tab1 tr:eq(2) td:eq(1)').text('全部'); 
+                               $('thead.tab1 tr:eq(2) td:eq(2)').text(data[0][direction]);
+                               $('thead.tab1 tr:eq(2) td:eq(3)').text(data[1][direction]); 
+                               $('thead.tab1 tr:eq(2) td:eq(4)').text(data[2][direction]); 
+                               $('thead.tab1 tr:eq(2) td:eq(5)').text(data[3][direction]);  
+                            });
+                                                }else{
+                            delete obj.direction;
+                            $('thead.tab1 tr:eq(2) td').empty();
+                            $('thead.tab1 tr:eq(2) td:eq(0)').text('知识点');
+                            $('thead.tab1 tr:eq(2) td:eq(1)').text('全部'); 
+                        }
+                        break;
+                case 2: $(this).parent().find('td').css("background","pink");
+                        $(this).css("background","green");
+                        $(this).css("cursor","pointer");
+                        if($(this).text()!='全部'&&$(this).text()!='知识点'){
+                            obj.knowledge=$(this).text();
+                                                }
+                        else{
+                            delete obj.knowledge;
+                        }
+                                                break;  
+                case 3: $(this).parent().children().css("background","skyblue");
+                        $(this).css("background","green");
+                        $(this).css("cursor","pointer");
+                        if($(this).text()!='全部'&&$(this).text()!='难度'){
+                            obj.difficulty=$(this).text();
+                                                }
+                        else{
+                            delete obj.difficulty;
+                        }
+                                                break;      
+           }
+        getQues(obj);
+        
+        }) 
+    //给不需要点击的行解绑
+    $('thead.tab1 tr:eq(4)').find('td').off();
+    $('thead.tab1 tr').find('td:eq(0)').off();
+    $('thead.tab1 tr:eq(0)').find('td:eq(5)').off();   
+         //默认点击全部 
+        $('thead.tab1 tr:eq(0)').find('td:eq(1)').trigger('click');  
+        //鼠标移入事件
+        $('tbody.tab1').on('mouseover','tr',function(){
+        $('tbody.tab1 tr td').css('backgroundColor','#ccc');
+        $(this).children().css('backgroundColor','orange');
+        $(this).popover();
+        })//鼠标移入结束
+        //删除功能
+        $('button.delete').on('click',function(){
+            var ids = $('tbody.tab1 input:checkbox:checked').map(function(index,item){
+          return $(item).val();
+        }).toArray();
+            if(ids.length>0){
+        $.ajax({
+          type: "POST",
+          url:"/questionBank/batchDelete",
+          data:JSON.stringify(ids),
+          contentType:"application/json",//http协议
+          success:function(data){
+            alert("成功删除了"+data.affectedRows+"条");
+             getQues(obj);
+          }
+        })
+        }
+      else{
+          alert("请选择要删除的题目");
+        }
+    });//结束删除 
+    //修改题目
+         
+        $('div.button button.update').on('click',function(){
+            var ids = $('tbody.tab1 input:checkbox:checked').map(function(index,item){
+          return $(item).val();
+        }).toArray();
+        if(ids.length==1){
+            var page=$(this).attr("page");
+            $('div.Content2').load(page);
+            $('div.button button.update').removeAttr('num')
+            $('div.button button.update').attr('num',ids[0]);
+                }
+        else{
+            alert('一次必须选择一个且只能选择一个题目进行修改');
+        }
+
+
+        })//结束修改
+       //查看题目
+        $('div.button button.select').on('click',function(){
+            var ids = $('tbody.tab1 input:checkbox:checked').map(function(index,item){
+          return $(item).val();
+        }).toArray();
+        if(ids.length==1){
+            var page=$(this).attr("page");
+            $('div.Content2').load(page);
+            $('div.button button.select').removeAttr('num');
+            $('div.button button.select').attr('num',ids[0]);
+        }
+        else{
+            alert('一次必须查看一个且只能选择一个题目进行查看');
+        }
+
+
+        })//查看结束
+        
+
+    })//页面加载完加载结束
+//封装获取信息函数
+function getQues(obj){
+    $('tbody.tab1').empty();
+        var num=1;
+           $.ajax('/questionBank/findByAll',{
+            'data':obj,
+            'method':'POST',
+            'content-Type':'application/json',
+            success:function(data){
+            data.forEach(function(item){
+                var newTr="<tr data-toggle='popover' data-trigger='hover' title='题干' data-content='"+item.question+"'>"
+                    +"<td> <input type='checkbox' value="+item.id+"> </td>"
+                    +"<td>"+num+++"</td>"
+                    +"<td>"+item.type+"</td>"
+                    +"<td>"+item.direction+"</td>"
+                    +"<td>"+item.knowledge+"</td>"
+                    +"<td>"+item.difficulty+"</td>"
+                +"</tr>";
+                $('tbody.tab1').append(newTr);
+            })
+            
+            }
+           });    
+}
+</script>
